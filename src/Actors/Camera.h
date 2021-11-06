@@ -12,6 +12,11 @@ public:
 private:
     class Actor* mTargetActor;
 
+    // target設定時のOffset値
+    float mOffsetPosForward = 15.0f;
+    float mOffsetPosUp = 5.0f;
+    float mOffsetTargetForward = 30.0f;
+
 public:
     void SetTargetActor(Actor* actor) { mTargetActor = actor; }
 

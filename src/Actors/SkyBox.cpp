@@ -8,7 +8,7 @@ SkyBox::SkyBox(class Game *game)
 {
     // バック側の背景
     bgBack = new Actor(game);
-    bgBack->SetScale(Vector3(150.0f, 150.0f, 150.0f));
+    bgBack->SetScale(Vector3(1.5f, 1.5f, 1.5f));
     auto* bgBackMeshComp = new MeshComponent(bgBack);
     auto* bgBackMesh = game->GetRenderer()->GetMesh(game->GetAssetsPath() + "bg_back.fbx");
     bgBackMeshComp->SetMesh(bgBackMesh);
@@ -17,7 +17,7 @@ SkyBox::SkyBox(class Game *game)
 
     // フロント側の背景
     bgFront = new Actor(game);
-    bgFront->SetScale(Vector3(100.0f, 100.0f, 100.0f));
+    bgFront->SetScale(Vector3(1.0f, 1.0f, 1.0f));
     auto* bgFrontMeshComp = new MeshComponent(bgFront);
     auto* bgFrontMesh = game->GetRenderer()->GetMesh(game->GetAssetsPath() + "bg_front.fbx");
     bgFrontMeshComp->SetMesh(bgFrontMesh);

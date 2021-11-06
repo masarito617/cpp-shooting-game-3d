@@ -84,7 +84,7 @@ bool Renderer::LoadData()
                                                       25.0f, 100000.0f);
     // カメラ作成
     mCamera = new Camera(mGame);
-    mCamera->SetPosition(Vector3(0.0f, 0.0f, -700.0f));
+    mCamera->SetPosition(Vector3(0.0f, 5.0f, -15.0f));
 
     // ライティングパラメータ設定
     mAmbientLight = Vector3(0.35f, 0.35f, 0.35f);

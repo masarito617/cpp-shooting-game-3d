@@ -13,36 +13,51 @@ Ship::Ship(class Game *game)
     auto* shader = game->GetRenderer()->GetShader(Shader::ShaderType::PHONG);
     meshComp->SetShader(shader);
 
+    // カメラターゲットに設定
     game->GetRenderer()->GetCamera()->SetTargetActor(this);
 }
 
 void Ship::UpdateActor(float deltaTime)
 {
-    // TODO
+    // 回転が変わった場合
+    bool isChangeRotLeft  = mIsRotLeft  != mIsRotLeftBefore;
+    bool isChangeRotRight = mIsRotRight != mIsRotRightBefore;
+    if (isChangeRotLeft || isChangeRotRight)
+    {
+        // 船の傾きを調整
+        // 同時押しされた場合も考慮
+        float rot = 0.0f;
+        if (isChangeRotLeft)
+        {
+            rot += mIsRotLeft ? mTorTilt : -mTorTilt;
+        }
+        if (isChangeRotRight)
+        {
+            rot += mIsRotRight ? -mTorTilt : mTorTilt;
+        }
+        Quaternion q = Quaternion(GetForward(), Math::ToRadians(rot));
+        SetRotation(Quaternion::Concatenate(GetRotation(), q));
+    }
+    // 回転中フラグを保持
+    mIsRotLeftBefore = mIsRotLeft;
+    mIsRotRightBefore = mIsRotRight;
 }
 
 void Ship::ProcessInput(const uint8_t *state)
 {
     Actor::ProcessInput(state);
 
-    // TODO 回転処理と傾きを追加する
-    float moveSpeed = 10.0f;
-    Vector3 pos = GetPosition();
+    // 押下キー方向に回転する
+    mIsRotLeft = false;
+    mIsRotRight = false;
     if (state[SDL_SCANCODE_A])
     {
-        pos.x -= moveSpeed;
+        SetRotationY(Math::ToRadians(-mRotSpeed));
+        mIsRotLeft = true;
     }
     if (state[SDL_SCANCODE_D])
     {
-        pos.x += moveSpeed;
+        SetRotationY(Math::ToRadians(mRotSpeed));
+        mIsRotRight = true;
     }
-    if (state[SDL_SCANCODE_W])
-    {
-        pos.y += moveSpeed;
-    }
-    if (state[SDL_SCANCODE_S])
-    {
-        pos.y -= moveSpeed;
-    }
-    SetPosition(pos);
 }

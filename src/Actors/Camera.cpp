@@ -12,12 +12,18 @@ void Camera::UpdateActor(float deltaTime)
 
     // カメラ位置よりビュー変換座標を設定する
     Vector3 position = GetPosition();
-    Vector3 target = GetPosition() + 200.0f*GetForward(); // 200.0f前方がターゲット
+    Vector3 target = GetPosition() + 100.0f*GetForward(); // 100.0f前方がターゲット
     // ターゲットが設定されている場合
     if (mTargetActor)
     {
-        // TODO 宇宙船の後方固定となるよう修正する
-        target = mTargetActor->GetPosition() - GetPosition();
+        // カメラ位置をターゲットの後方に更新
+        position = mTargetActor->GetPosition();
+        position -= mOffsetPosForward * mTargetActor->GetForward();
+        position += mOffsetPosUp * Math::VEC3_UNIT_Y;
+        SetPosition(position);
+        // 注視点をターゲットの前方に設定
+        target = mTargetActor->GetPosition();
+        target += mOffsetTargetForward * mTargetActor->GetForward();
     }
     Vector3 up = Math::VEC3_UNIT_Y;
     Matrix4 viewMatrix = Matrix4::CreateLookAt(position, target, up);
