@@ -29,11 +29,11 @@ void Ship::UpdateActor(float deltaTime)
         float rot = 0.0f;
         if (isChangeRotLeft)
         {
-            rot += mIsRotLeft ? mTorTilt : -mTorTilt;
+            rot += mIsRotLeft ? mRotTilt : -mRotTilt;
         }
         if (isChangeRotRight)
         {
-            rot += mIsRotRight ? -mTorTilt : mTorTilt;
+            rot += mIsRotRight ? -mRotTilt : mRotTilt;
         }
         Quaternion q = Quaternion(GetForward(), Math::ToRadians(rot));
         SetRotation(Quaternion::Concatenate(GetRotation(), q));

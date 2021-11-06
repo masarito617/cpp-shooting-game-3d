@@ -11,7 +11,7 @@ public:
 
 private:
     float mRotSpeed = 1.0f; // 回転速度
-    float mTorTilt = 30.0f; // 回転中の船の傾き
+    float mRotTilt = 30.0f; // 回転中の船の傾き
 
     // 回転中かどうかの判定で使用
     bool mIsRotLeft = false;
