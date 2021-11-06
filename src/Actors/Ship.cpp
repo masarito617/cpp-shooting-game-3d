@@ -1,5 +1,4 @@
 #include "Ship.h"
-#include "Camera.h"
 #include "../Game.h"
 #include "../Commons/Mesh.h"
 #include "../Components/MeshComponent.h"
@@ -12,9 +11,6 @@ Ship::Ship(class Game *game)
     meshComp->SetMesh(mesh);
     auto* shader = game->GetRenderer()->GetShader(Shader::ShaderType::PHONG);
     meshComp->SetShader(shader);
-
-    // カメラターゲットに設定
-    game->GetRenderer()->GetCamera()->SetTargetActor(this);
 }
 
 void Ship::UpdateActor(float deltaTime)
