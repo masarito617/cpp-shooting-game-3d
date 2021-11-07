@@ -1,6 +1,7 @@
 #include "ReadyScene.h"
 #include "../Game.h"
 #include "../Actors/Camera.h"
+#include "../Actors/Enemy.h"
 #include "../Actors/Ship.h"
 
 ReadyScene::ReadyScene(class Game *game)
@@ -17,6 +18,11 @@ void ReadyScene::Start()
     ship->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
     // カメラターゲットに設定
     mGame->GetRenderer()->GetCamera()->SetTargetActor(ship);
+
+    // エネミー生成
+    auto* enemy = new Enemy(mGame);
+    enemy->SetPosition(Vector3(0.0f, 0.0f, 20.0f));
+    enemy->SetRotationY(Math::ToRadians(180.0f));
 }
 
 void ReadyScene::Update(float deltaTime)
