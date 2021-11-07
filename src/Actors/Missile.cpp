@@ -1,6 +1,9 @@
 #include "Missile.h"
+#include "Enemy.h"
 #include "../Game.h"
+#include "../Commons/Collider.h"
 #include "../Commons/Mesh.h"
+#include "../Components/BoxColliderComponent.h"
 #include "../Components/MeshComponent.h"
 
 Missile::Missile(class Game *game)
@@ -11,6 +14,8 @@ Missile::Missile(class Game *game)
     meshComp->SetMesh(mesh);
     auto* shader = game->GetRenderer()->GetShader(Shader::ShaderType::SPRITE);
     meshComp->SetShader(shader);
+    mCollider = new BoxColliderComponent(this);
+    mCollider->SetObjectAABB(mesh->GetBox());
 }
 
 void Missile::UpdateActor(float deltaTime)
@@ -26,6 +31,17 @@ void Missile::UpdateActor(float deltaTime)
     if (pos.Length() > mDistance)
     {
         SetState(EDead);
+    }
+
+    // エネミーと衝突したら破壊
+    for (auto enemy : GetGame()->GetEnemies())
+    {
+        if (Intersect(mCollider->GetWorldBox(), enemy->GetCollider()->GetWorldBox()))
+        {
+            SetState(EDead);
+            enemy->SetState(EDead);
+            break;
+        }
     }
 }
 

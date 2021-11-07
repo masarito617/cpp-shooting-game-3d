@@ -10,6 +10,7 @@ public:
     void ProcessInput(const uint8_t* state, float deltaTime) override;
 
 private:
+    class BoxColliderComponent* mCollider;
     float mRotSpeed = 45.0f; // 回転速度
     float mRotTilt = 30.0f;  // 回転中の船の傾き
 

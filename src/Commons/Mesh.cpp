@@ -8,6 +8,7 @@
 Mesh::Mesh()
 :mVertexArray(nullptr)
 ,mTexture(nullptr)
+,mAABBBox(Math::VEC3_ZERO, Math::VEC3_ZERO)
 {}
 
 Mesh::~Mesh()
@@ -81,6 +82,8 @@ bool Mesh::Load(const std::string &filePath, Game* game)
         vertex.push_back(point[1]);
         vertex.push_back(point[2]);
         vertexList.push_back(vertex);
+        // AABB情報も設定
+        mAABBBox.UpdatePointMinMax(Vector3(point[0], point[1], point[2]));
     }
 
     // インデックス座標の読込

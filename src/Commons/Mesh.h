@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <fbxsdk.h>
+#include "Collider.h"
 
 // モデルクラス
 class Mesh {
@@ -18,6 +19,7 @@ private:
     // 読み込んだモデル情報
     class VertexArray* mVertexArray; // 頂点座標
     class Texture* mTexture;         // テクスチャ
+    AABB mAABBBox; // AABB情報
 
     // 頂点情報の編集で使用
     std::vector<float> CreateVertexInfo(const std::vector<float>& vertex,
@@ -27,5 +29,6 @@ private:
 
 public:
     class VertexArray* GetVertexArray() { return mVertexArray; }
+    const AABB& GetBox() const { return mAABBBox; }
 
 };

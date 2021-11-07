@@ -193,3 +193,17 @@ void Game::RemoveActor(Actor* actor)
         mActors.erase(iter);
     }
 }
+
+// エネミー追加・削除処理
+void Game::AddEnemy(Enemy* enemy)
+{
+    mEnemies.emplace_back(enemy);
+}
+void Game::RemoveEnemy(Enemy* enemy)
+{
+    auto iter = std::find(mEnemies.begin(),mEnemies.end(), enemy);
+    if (iter != mEnemies.end())
+    {
+        mEnemies.erase(iter);
+    }
+}

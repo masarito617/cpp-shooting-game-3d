@@ -2,6 +2,7 @@
 #include "Missile.h"
 #include "../Game.h"
 #include "../Commons/Mesh.h"
+#include "../Components/BoxColliderComponent.h"
 #include "../Components/MeshComponent.h"
 
 Ship::Ship(class Game *game)
@@ -12,6 +13,8 @@ Ship::Ship(class Game *game)
     meshComp->SetMesh(mesh);
     auto* shader = game->GetRenderer()->GetShader(Shader::ShaderType::PHONG);
     meshComp->SetShader(shader);
+    mCollider = new BoxColliderComponent(this);
+    mCollider->SetObjectAABB(mesh->GetBox());
 }
 
 void Ship::UpdateActor(float deltaTime)

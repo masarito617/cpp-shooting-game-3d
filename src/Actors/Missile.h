@@ -10,6 +10,7 @@ public:
     void ProcessInput(const uint8_t* state, float deltaTime) override;
 
 private:
+    class BoxColliderComponent* mCollider;
     float mSpeed = 30.0f;    // 速度
     float mDistance = 50.0f; // 射程距離
 

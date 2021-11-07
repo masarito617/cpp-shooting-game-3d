@@ -95,6 +95,12 @@ void Actor::CalculateWouldTransform()
         mWorldTransform = Matrix4::CreateTranslation(mPosition.x, mPosition.y, mPosition.z);
         mWorldTransform *= Matrix4::CreateQuaternion(mRotation);
         mWorldTransform *= Matrix4::CreateScale(mScale.x, mScale.y, mScale.z);
+
+        // Componentのワールド座標を更新
+        for (auto comp : mComponents)
+        {
+            comp->OnUpdateWorldTransform();
+        }
     }
 }
 

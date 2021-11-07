@@ -8,6 +8,7 @@ public:
     Component(class Actor* owner, int updateOrder = 100);
     virtual ~Component();
     virtual void Update(float deltaTime); // コンポーネント更新処理
+    virtual void OnUpdateWorldTransform();
 
 protected:
     class Actor* mActor; // コンポーネントを追加するアクタ

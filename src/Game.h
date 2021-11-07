@@ -20,6 +20,10 @@ public:
     void AddActor(class Actor* actor);
     void RemoveActor(class Actor* actor);
 
+    // エネミー追加・削除
+    void AddEnemy(class Enemy* enemy);
+    void RemoveEnemy(class Enemy* enemy);
+
     constexpr static const float ScreenWidth  = 1024.0f; // スクリーン横幅
     constexpr static const float ScreenHeight = 768.0f;  // スクリーン縦幅
 
@@ -39,6 +43,8 @@ private:
 
     class Scene* mScene;     // 現在のシーン
     class Scene* mNextScene; // 遷移するシーン
+
+    std::vector<class Enemy*> mEnemies; // エネミー群
     
     // Mac + CLion環境での相対パス
     const std::string AssetsPath = "../Assets/";      // Assetsパス
@@ -57,5 +63,6 @@ public:
     std::string GetAssetsPath() const { return AssetsPath; }
     std::string GetShaderPath() const { return ShaderPath; }
     class Renderer* GetRenderer() const { return mRenderer; }
+    std::vector<class Enemy*> GetEnemies() { return mEnemies; }
 
 };
