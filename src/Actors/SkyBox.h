@@ -9,7 +9,7 @@ public:
     SkyBox(class Game* game);
 
     void UpdateActor(float deltaTime) override;
-    void ProcessInput(const uint8_t* state) override;
+    void ProcessInput(const uint8_t* state, float deltaTime) override;
 
 private:
     Actor* bgFront;

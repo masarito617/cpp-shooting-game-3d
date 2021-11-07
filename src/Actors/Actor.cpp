@@ -53,7 +53,7 @@ void Actor::UpdateActor(float deltaTime)
 }
 
 // キー入力処理
-void Actor::ProcessInput(const uint8_t *state)
+void Actor::ProcessInput(const uint8_t *state,  float deltaTime)
 {
 }
 

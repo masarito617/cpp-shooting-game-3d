@@ -19,7 +19,7 @@ public:
     void Update(float deltaTime);              // 更新処理
     void UpdateComponents(float deltaTime);    // コンポーネント更新処理
     virtual void UpdateActor(float deltaTime); // アクタ更新処理
-    virtual void ProcessInput(const uint8_t *state); // キー入力処理
+    virtual void ProcessInput(const uint8_t *state, float deltaTime); // キー入力処理
 
     void AddComponent(class Component* component);    // コンポーネント追加処理
     void RemoveComponent(class Component* component); // コンポーネント削除処理

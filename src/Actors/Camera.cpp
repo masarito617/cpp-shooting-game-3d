@@ -30,7 +30,7 @@ void Camera::UpdateActor(float deltaTime)
     GetGame()->GetRenderer()->SetViewMatrix(viewMatrix);
 }
 
-void Camera::ProcessInput(const uint8_t *state)
+void Camera::ProcessInput(const uint8_t *state, float deltaTime)
 {
-    Actor::ProcessInput(state);
+    Actor::ProcessInput(state, deltaTime);
 }

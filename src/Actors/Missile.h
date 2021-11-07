@@ -2,11 +2,15 @@
 #include "Actor.h"
 #include "../Commons/Shader.h"
 
-class Bomb : public Actor {
+class Missile : public Actor {
 public:
-    Bomb(class Game* game);
+    Missile(class Game* game);
 
     void UpdateActor(float deltaTime) override;
     void ProcessInput(const uint8_t* state, float deltaTime) override;
+
+private:
+    float mSpeed = 30.0f;    // 速度
+    float mDistance = 50.0f; // 射程距離
 
 };

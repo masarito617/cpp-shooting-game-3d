@@ -24,9 +24,9 @@ public:
     constexpr static const float ScreenHeight = 768.0f;  // スクリーン縦幅
 
 private:
-    void Update();         // シーン更新処理
-    void ProcessInput();   // 入力検知
-    void GenerateOutput(); // 出力処理
+    void Update();                      // シーン更新処理
+    void ProcessInput(float deltaTime); // 入力検知
+    void GenerateOutput();              // 出力処理
 
     std::vector<class Actor*> mActors;        // アクタリスト
     std::vector<class Actor*> mPendingActors; // 待機中のアクタリスト

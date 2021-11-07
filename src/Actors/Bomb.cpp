@@ -15,10 +15,10 @@ Bomb::Bomb(class Game *game)
 
 void Bomb::UpdateActor(float deltaTime)
 {
-    // TODO
+    Actor::UpdateActor(deltaTime);
 }
 
-void Bomb::ProcessInput(const uint8_t *state)
+void Bomb::ProcessInput(const uint8_t *state, float deltaTime)
 {
-    // TODO
+    Actor::ProcessInput(state, deltaTime);
 }

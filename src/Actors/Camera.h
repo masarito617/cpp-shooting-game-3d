@@ -7,15 +7,15 @@ public:
     Camera(class Game* game);
 
     void UpdateActor(float deltaTime) override;
-    void ProcessInput(const uint8_t* state) override;
+    void ProcessInput(const uint8_t* state, float deltaTime) override;
 
 private:
     class Actor* mTargetActor;
 
     // target設定時のOffset値
     float mOffsetPosForward = 15.0f;
-    float mOffsetPosUp = 5.0f;
-    float mOffsetTargetForward = 30.0f;
+    float mOffsetPosUp = 8.5f;
+    float mOffsetTargetForward = 10.0f;
 
 public:
     void SetTargetActor(Actor* actor) { mTargetActor = actor; }

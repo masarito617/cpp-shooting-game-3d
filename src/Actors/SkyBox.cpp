@@ -34,6 +34,7 @@ void SkyBox::UpdateActor(float deltaTime)
     bgFront->SetRotationY(Math::ToRadians(frontRotSpeed * deltaTime));
 }
 
-void SkyBox::ProcessInput(const uint8_t *state)
+void SkyBox::ProcessInput(const uint8_t *state, float deltaTime)
 {
+    Actor::ProcessInput(state, deltaTime);
 }

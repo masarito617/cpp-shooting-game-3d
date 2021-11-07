@@ -77,9 +77,6 @@ void Game::RunLoop()
 // シーン更新処理
 void Game::Update()
 {
-    // 入力検知
-    ProcessInput();
-
     // 最低16msは待機
     while (!SDL_TICKS_PASSED(SDL_GetTicks(), mTicksCount + 16));
     // フレームの経過時間を取得(最大50ms)
@@ -89,6 +86,9 @@ void Game::Update()
         deltaTime = 0.05f;
     }
     mTicksCount = SDL_GetTicks();
+
+    // 入力検知
+    ProcessInput(deltaTime);
 
     // アクタ更新処理
     mUpdatingActors = true;
@@ -127,7 +127,7 @@ void Game::Update()
 }
 
 // ゲームループ 入力検知
-void Game::ProcessInput()
+void Game::ProcessInput(float deltaTime)
 {
     // SDLイベント
     SDL_Event event;
@@ -150,7 +150,7 @@ void Game::ProcessInput()
     // 各アクタの入力イベント
     for (auto actor : mActors)
     {
-        actor->ProcessInput(state);
+        actor->ProcessInput(state, deltaTime);
     }
 }
 

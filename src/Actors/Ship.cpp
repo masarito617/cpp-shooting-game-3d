@@ -1,4 +1,5 @@
 #include "Ship.h"
+#include "Missile.h"
 #include "../Game.h"
 #include "../Commons/Mesh.h"
 #include "../Components/MeshComponent.h"
@@ -15,6 +16,8 @@ Ship::Ship(class Game *game)
 
 void Ship::UpdateActor(float deltaTime)
 {
+    Actor::UpdateActor(deltaTime);
+
     // 回転が変わった場合
     bool isChangeRotLeft  = mIsRotLeft  != mIsRotLeftBefore;
     bool isChangeRotRight = mIsRotRight != mIsRotRightBefore;
@@ -37,23 +40,47 @@ void Ship::UpdateActor(float deltaTime)
     // 回転中フラグを保持
     mIsRotLeftBefore = mIsRotLeft;
     mIsRotRightBefore = mIsRotRight;
+
+    // ミサイルを撃つ間隔を開ける
+    if (!mIsCanShot)
+    {
+        mDeltaShotTime += deltaTime;
+        if (mDeltaShotTime > CanShotTime)
+        {
+            mIsCanShot = true;
+            mDeltaShotTime = 0.0f;
+        }
+    }
 }
 
-void Ship::ProcessInput(const uint8_t *state)
+void Ship::ProcessInput(const uint8_t *state, float deltaTime)
 {
-    Actor::ProcessInput(state);
+    Actor::ProcessInput(state, deltaTime);
 
     // 押下キー方向に回転する
     mIsRotLeft = false;
     mIsRotRight = false;
     if (state[SDL_SCANCODE_A])
     {
-        SetRotationY(Math::ToRadians(-mRotSpeed));
+        SetRotationY(Math::ToRadians(-mRotSpeed * deltaTime));
         mIsRotLeft = true;
     }
     if (state[SDL_SCANCODE_D])
     {
-        SetRotationY(Math::ToRadians(mRotSpeed));
+        SetRotationY(Math::ToRadians(mRotSpeed * deltaTime));
         mIsRotRight = true;
+    }
+    // ミサイル発射
+    if (state[SDL_SCANCODE_K])
+    {
+        if (mIsCanShot) {
+            // 撃つ間隔を開けるためフラグを変更
+            mIsCanShot = false;
+            mDeltaShotTime = 0.0f;
+            // 前方にミサイル生成
+            auto* missile = new Missile(GetGame());
+            missile->SetPosition(GetPosition() + 5.0f * GetForward());
+            missile->SetRotation(GetRotation());
+        }
     }
 }
