@@ -112,6 +112,13 @@ public:
         z -= vec.z;
         return *this;
     }
+    Vector3& operator*=(float scalar)
+    {
+        x *= scalar;
+        y *= scalar;
+        z *= scalar;
+        return *this;
+    }
 
     // ベクトルの長さ
     float Length() const
