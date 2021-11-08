@@ -46,7 +46,10 @@ bool Game::LoadData()
     if (!mRenderer->LoadData()) return false;
 
     // 背景の作成
-    auto* skybox = new SkyBox(this);
+    auto* bgBack = new SkyBox(this, "bg_back.fbx", 5.0f);
+    bgBack->SetScale(Vector3(1.5f, 1.5f, 1.5f));
+    auto* bgFront = new SkyBox(this, "bg_front.fbx", 7.0f);
+    bgFront->SetScale(Vector3(1.0f, 1.0f, 1.0f));
 
     return true;
 }
