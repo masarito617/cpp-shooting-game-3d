@@ -6,15 +6,12 @@
 // 星のテクスチャを球体の裏側に貼って表現
 class SkyBox : public Actor {
 public:
-    SkyBox(class Game* game);
+    SkyBox(class Game* game, std::string fbxName, float rotSpeed);
 
     void UpdateActor(float deltaTime) override;
     void ProcessInput(const uint8_t* state, float deltaTime) override;
 
 private:
-    Actor* bgFront;
-    Actor* bgBack;
-    float frontRotSpeed = 7.0f;
-    float backRotSpeed = 5.0f;
+    float mRotSpeed = 7.0f;
 
 };
