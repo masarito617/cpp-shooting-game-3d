@@ -29,6 +29,12 @@ void ReadyScene::Start()
     auto* enemy3 = new Enemy(mGame);
     enemy3->SetPosition(Vector3(-5.0f, 0.0f, 20.0f));
     enemy3->SetRotationY(Math::ToRadians(180.0f));
+    auto* enemy4 = new Enemy(mGame);
+    enemy4->SetPosition(Vector3(5.0f, 0.0f, 40.0f));
+    enemy4->SetRotationY(Math::ToRadians(180.0f));
+    auto* enemy5 = new Enemy(mGame);
+    enemy5->SetPosition(Vector3(-5.0f, 0.0f, 40.0f));
+    enemy5->SetRotationY(Math::ToRadians(180.0f));
 }
 
 void ReadyScene::Update(float deltaTime)

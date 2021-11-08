@@ -1,4 +1,5 @@
 #include "Missile.h"
+#include "Bomb.h"
 #include "Enemy.h"
 #include "../Game.h"
 #include "../Commons/Collider.h"
@@ -40,6 +41,10 @@ void Missile::UpdateActor(float deltaTime)
         {
             SetState(EDead);
             enemy->SetState(EDead);
+            // 爆発エフェクトを生成
+            auto* bomb = new Bomb(GetGame());
+            bomb->SetPosition(enemy->GetPosition());
+            bomb->SetRotation(enemy->GetRotation());
             break;
         }
     }
