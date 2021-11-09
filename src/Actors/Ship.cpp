@@ -1,4 +1,7 @@
 #include "Ship.h"
+#include "Bomb.h"
+#include "Camera.h"
+#include "Enemy.h"
 #include "Missile.h"
 #include "../Game.h"
 #include "../Commons/Mesh.h"
@@ -56,6 +59,29 @@ void Ship::UpdateActor(float deltaTime)
     }
 }
 
+void Ship::LateUpdateActor(float deltaTime)
+{
+    // エネミーと衝突したら破壊
+    for (auto enemy : GetGame()->GetEnemies())
+    {
+        if (Intersect(mCollider->GetWorldBox(), enemy->GetCollider()->GetWorldBox()))
+        {
+            // プレイヤーが消えるため、ダミーのアクタをカメラターゲットに設定す
+            auto* dummy = new Actor(GetGame());
+            dummy->SetPosition(GetPosition());
+            dummy->SetRotation(GetRotation());
+            GetGame()->GetRenderer()->GetCamera()->SetTargetActor(dummy);
+            // プレイヤー破棄
+            SetState(EDead);
+            // 爆発エフェクトを生成
+            auto* bomb = new Bomb(GetGame());
+            bomb->SetPosition(enemy->GetPosition());
+            bomb->SetRotation(enemy->GetRotation());
+            break;
+        }
+    }
+}
+
 void Ship::ProcessInput(const uint8_t *state, float deltaTime)
 {
     Actor::ProcessInput(state, deltaTime);
@@ -82,7 +108,7 @@ void Ship::ProcessInput(const uint8_t *state, float deltaTime)
             mDeltaShotTime = 0.0f;
             // 前方にミサイル生成
             auto* missile = new Missile(GetGame());
-            missile->SetPosition(GetPosition() + 5.0f * GetForward());
+            missile->SetPosition(GetPosition() + 3.0f * GetForward());
             missile->SetRotation(GetRotation());
         }
     }

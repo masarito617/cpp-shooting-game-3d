@@ -7,6 +7,7 @@ public:
     Ship(class Game* game);
 
     void UpdateActor(float deltaTime) override;
+    void LateUpdateActor(float deltaTime) override;
     void ProcessInput(const uint8_t* state, float deltaTime) override;
 
 private:

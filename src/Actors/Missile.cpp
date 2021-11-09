@@ -33,7 +33,10 @@ void Missile::UpdateActor(float deltaTime)
     {
         SetState(EDead);
     }
+}
 
+void Missile::LateUpdateActor(float deltaTime)
+{
     // エネミーと衝突したら破壊
     for (auto enemy : GetGame()->GetEnemies())
     {

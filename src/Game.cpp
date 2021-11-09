@@ -99,6 +99,10 @@ void Game::Update()
     {
         actor->Update(deltaTime);
     }
+    for (auto actor : mActors)
+    {
+        actor->LateUpdateActor(deltaTime);
+    }
     mUpdatingActors = false;
 
     // 待機中のアクタを追加
