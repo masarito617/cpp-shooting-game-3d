@@ -20,25 +20,30 @@ void ReadyScene::Start()
     mGame->GetRenderer()->GetCamera()->SetTargetActor(ship);
 
     // エネミー生成
+    // *120でスタート、100あたりで見えるようになる
     auto* enemy = new Enemy(mGame);
-    enemy->SetInitPosition(Vector3(20.0f, 0.0f, 40.0f));
+    enemy->SetInitPosition(Vector3(0.0f, 0.0f, 120.0f));
     enemy->SetSpeed(35.0f);
-    enemy->SetWaitTime(3.0f);
-    auto* enemy2 = new Enemy(mGame);
-    enemy2->SetInitPosition(Vector3(-10.0f, 0.0f, 40.0f));
-    enemy2->SetMoveType(Enemy::SHAKE);
-    enemy2->SetSpeed(45.0f);
-    enemy2->SetWaitTime(3.0f);
-    auto* enemy3 = new Enemy(mGame);
-    enemy3->SetInitPosition(Vector3(-20.0f, 0.0f, 40.0f));
-    enemy3->SetMoveType(Enemy::SHAKE);
-    enemy3->SetShakeWidth(2.0f);
-    enemy3->SetSpeed(25.0f);
-    enemy3->SetWaitTime(3.0f);
-    auto* enemy4 = new Enemy(mGame);
-    enemy4->SetInitPosition(Vector3(5.0f, 0.0f, 40.0f));
-    enemy4->SetSpeed(35.0f);
-    enemy4->SetWaitTime(3.0f);
+    enemy->SetWaitTime(10.0f);
+//    auto* enemy = new Enemy(mGame);
+//    enemy->SetInitPosition(Vector3(20.0f, 0.0f, 40.0f));
+//    enemy->SetSpeed(35.0f);
+//    enemy->SetWaitTime(3.0f);
+//    auto* enemy2 = new Enemy(mGame);
+//    enemy2->SetInitPosition(Vector3(-10.0f, 0.0f, 40.0f));
+//    enemy2->SetMoveType(Enemy::SHAKE);
+//    enemy2->SetSpeed(45.0f);
+//    enemy2->SetWaitTime(3.0f);
+//    auto* enemy3 = new Enemy(mGame);
+//    enemy3->SetInitPosition(Vector3(-20.0f, 0.0f, 40.0f));
+//    enemy3->SetMoveType(Enemy::SHAKE);
+//    enemy3->SetShakeWidth(2.0f);
+//    enemy3->SetSpeed(25.0f);
+//    enemy3->SetWaitTime(3.0f);
+//    auto* enemy4 = new Enemy(mGame);
+//    enemy4->SetInitPosition(Vector3(5.0f, 0.0f, 40.0f));
+//    enemy4->SetSpeed(35.0f);
+//    enemy4->SetWaitTime(3.0f);
 }
 
 void ReadyScene::Update(float deltaTime)

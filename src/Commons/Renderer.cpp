@@ -81,7 +81,7 @@ bool Renderer::LoadData()
     mViewMatrix = Matrix4::CreateLookAt(Math::VEC3_ZERO, Math::VEC3_UNIT_Z, Math::VEC3_UNIT_Y); // カメラ無しの初期値
     mProjectionMatrix = Matrix4::CreatePerspectiveFOV(Math::ToRadians(50.0f),
                                                       mGame->ScreenWidth, mGame->ScreenHeight,
-                                                      25.0f, 100000.0f);
+                                                      25.0f, 300.0f);
     // カメラ作成
     mCamera = new Camera(mGame);
     mCamera->SetPosition(Vector3(0.0f, 5.0f, -15.0f));
