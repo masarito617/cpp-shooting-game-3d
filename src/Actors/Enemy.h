@@ -9,7 +9,7 @@ public:
 
     void UpdateActor(float deltaTime) override;
     void ProcessInput(const uint8_t* state, float deltaTime) override;
-    void SetInitPosition(const Vector3& pos);
+    void SetInitPositionByDegree(float degree);
 
     enum MoveType
     {
@@ -27,7 +27,8 @@ private:
     float mTimeCount;       // 経過時間
     float mWaitTime;        // 待機時間
 
-    float mHappyRotSpeed = 3.5f; // 喜びの舞
+    float mHappyRotSpeed = 3.5f;    // 喜びの舞
+    float mAppearDistance = 120.0f; // 出現時の距離(100あたりから見えるようになる)
 
 public:
     class BoxColliderComponent* GetCollider() const { return mCollider; }

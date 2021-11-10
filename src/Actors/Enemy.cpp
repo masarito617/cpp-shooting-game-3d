@@ -70,8 +70,15 @@ void Enemy::ProcessInput(const uint8_t *state, float deltaTime)
     Actor::ProcessInput(state, deltaTime);
 }
 
-void Enemy::SetInitPosition(const Vector3 &pos)
+// 上から見た時の角度から位置を設定する
+// *正面：0度 右斜め前：30度
+void Enemy::SetInitPositionByDegree(float degree)
 {
+    // Y軸の回転クォータニオン
+    Quaternion q(Math::VEC3_UNIT_Y, Math::ToRadians(degree));
+    // 正面のベクトルを回転した位置を求める
+    Vector3 pos = mAppearDistance * Math::VEC3_UNIT_Z;
+    pos = Quaternion::RotateVec(pos, q);
     Actor::SetPosition(pos);
     // 初期位置を保持する
     mInitPosition = new Vector3(pos.x, pos.y, pos.z);
