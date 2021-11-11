@@ -28,6 +28,7 @@ public:
     void CalculateWouldTransform(); // ワールド座標計算処理
 
     Vector3 GetForward() const; // 前方ベクトルの取得
+    Vector3 GetRight() const;   // 右方ベクトルの取得
 
     void SetRotationX(float radian); // X軸の回転処理
     void SetRotationY(float radian); // Y軸の回転処理

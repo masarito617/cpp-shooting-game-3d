@@ -116,6 +116,12 @@ Vector3 Actor::GetForward() const
     return Quaternion::RotateVec(Math::VEC3_UNIT_Z, mRotation);
 }
 
+Vector3 Actor::GetRight() const
+{
+    // X方向の単位ベクトルとクォータニオンから計算
+    return Quaternion::RotateVec(Math::VEC3_UNIT_X, mRotation);
+}
+
 // クォータニオンを加えて回転させる
 void Actor::SetRotationX(float radian)
 {

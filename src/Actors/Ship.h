@@ -25,5 +25,6 @@ private:
     bool mIsCanShot;      // ミサイルを撃てるかどうか？
     float mDeltaShotTime; // ミサイルを撃ってからの時間
     const float CanShotTime = 0.15f; // ミサイルを撃てるようになるまでの間隔
+    float mShotRotVertical = 15.0f;  // ショットの縦方向の角度
 
 };

@@ -29,6 +29,7 @@ void Ship::UpdateActor(float deltaTime)
     bool isChangeRotRight = mIsRotRight != mIsRotRightBefore;
     if (isChangeRotLeft || isChangeRotRight)
     {
+        // TODO 船の角度を保持する
         // 船の傾きを調整
         // 同時押しされた場合も考慮
         float rot = 0.0f;
@@ -73,10 +74,11 @@ void Ship::LateUpdateActor(float deltaTime)
             GetGame()->GetRenderer()->GetCamera()->SetTargetActor(dummy);
             // プレイヤー破棄
             SetState(EDead);
+            // TODO 保持している角度を使ってQuaternionを計算する
             // 爆発エフェクトを生成
             auto* bomb = new Bomb(GetGame());
-            bomb->SetPosition(enemy->GetPosition());
-            bomb->SetRotation(enemy->GetRotation());
+            bomb->SetPosition(GetPosition());
+            bomb->SetRotation(GetRotation());
             break;
         }
     }
@@ -109,7 +111,20 @@ void Ship::ProcessInput(const uint8_t *state, float deltaTime)
             // 前方にミサイル生成
             auto* missile = new Missile(GetGame());
             missile->SetPosition(GetPosition() + 3.0f * GetForward());
-            missile->SetRotation(GetRotation());
+
+            // 縦方向の調整
+            Quaternion rot = GetRotation();
+            if (state[SDL_SCANCODE_W])
+            {
+                Quaternion q = Quaternion(GetRight(), Math::ToRadians(-mShotRotVertical));
+                rot = Quaternion::Concatenate(rot, q);
+            }
+            if (state[SDL_SCANCODE_S])
+            {
+                Quaternion q = Quaternion(GetRight(), Math::ToRadians(mShotRotVertical));
+                rot = Quaternion::Concatenate(rot, q);
+            }
+            missile->SetRotation(rot);
         }
     }
 }
