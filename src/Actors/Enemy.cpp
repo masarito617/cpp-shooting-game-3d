@@ -1,4 +1,5 @@
 #include "Enemy.h"
+#include "EnemyMarker.h"
 #include "../Game.h"
 #include "../Commons/Mesh.h"
 #include "../Components/BoxColliderComponent.h"
@@ -12,6 +13,7 @@ Enemy::Enemy(class Game *game)
 , mShakeWidth(5.0f)
 , mTimeCount(0.0f)
 , mWaitTime(0.0f)
+, mMarker(nullptr)
 {
     auto* meshComp = new MeshComponent(this);
     auto* mesh = game->GetRenderer()->GetMesh(game->GetAssetsPath() + "enemy.fbx");
@@ -21,6 +23,10 @@ Enemy::Enemy(class Game *game)
     mCollider = new BoxColliderComponent(this);
     mCollider->SetObjectAABB(mesh->GetBox());
 
+    // マーカー追加
+    mMarker = new EnemyMarker(game);
+    mMarker->SetTarget(this);
+
     // エネミー追加
     game->AddEnemy(this);
 }
@@ -29,6 +35,8 @@ Enemy::~Enemy()
 {
     // エネミー削除
     GetGame()->RemoveEnemy(this);
+    // マーカー削除
+    mMarker->SetState(EDead);
 }
 
 void Enemy::UpdateActor(float deltaTime)

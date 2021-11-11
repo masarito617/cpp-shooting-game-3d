@@ -282,6 +282,16 @@ public:
         return ret;
     }
 
+    friend Vector3 operator*(const Matrix4& a, const Vector3& v)
+    {
+        Vector3 ret;
+        ret.x = a.matrix[0][0]*v.x + a.matrix[0][1]*v.y + a.matrix[0][2]*v.z + a.matrix[0][3];
+        ret.y = a.matrix[1][0]*v.x + a.matrix[1][1]*v.y + a.matrix[1][2]*v.z + a.matrix[1][3];
+        ret.z = a.matrix[2][0]*v.x + a.matrix[2][1]*v.y + a.matrix[2][2]*v.z + a.matrix[2][3];
+        float w = a.matrix[3][0]*v.x + a.matrix[3][1]*v.y + a.matrix[3][2]*v.z + a.matrix[3][3];
+        return Vector3(ret.x/w, ret.y/w, ret.z/w);
+    }
+
     Matrix4 operator*=(const Matrix4& a)
     {
         *this = *this * a;

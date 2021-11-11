@@ -30,6 +30,8 @@ private:
     float mHappyRotSpeed = 3.5f;    // 喜びの舞
     float mAppearDistance = 120.0f; // 出現時の距離(100あたりから見えるようになる)
 
+    class EnemyMarker* mMarker; // マーカー
+
 public:
     class BoxColliderComponent* GetCollider() const { return mCollider; }
     void SetMoveType(const MoveType moveType) { mMoveType = moveType; }
