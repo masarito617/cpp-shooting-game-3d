@@ -10,7 +10,7 @@
 Game::Game()
 :mTicksCount(0)
 ,mIsRunning(true)
-,mUpdatingActors(false)
+,mIsLoopActors(false)
 {
 }
 
@@ -91,10 +91,10 @@ void Game::Update()
     mTicksCount = SDL_GetTicks();
 
     // 入力検知
+    mIsLoopActors = true;
     ProcessInput(deltaTime);
 
     // アクタ更新処理
-    mUpdatingActors = true;
     for (auto actor : mActors)
     {
         actor->Update(deltaTime);
@@ -103,11 +103,12 @@ void Game::Update()
     {
         actor->LateUpdateActor(deltaTime);
     }
-    mUpdatingActors = false;
+    mIsLoopActors = false;
 
     // 待機中のアクタを追加
     for (auto pending : mPendingActors)
     {
+        pending->CalculateWouldTransform();
         mActors.emplace_back(pending);
     }
     mPendingActors.clear();
@@ -182,8 +183,8 @@ void Game::Shutdown()
 // アクタ追加・削除処理
 void Game::AddActor(Actor* actor)
 {
-    // アクタ更新中ならPendingに格納
-    mUpdatingActors
+    // アクタループ中ならPendingに格納
+    mIsLoopActors
     ? mPendingActors.emplace_back(actor)
     : mActors.emplace_back(actor);
 }

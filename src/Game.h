@@ -37,9 +37,9 @@ private:
 
     class Renderer* mRenderer;
 
-    Uint32 mTicksCount;   // ゲーム時間
-    bool mIsRunning;      // 実行中か否か？
-    bool mUpdatingActors; // アクタ更新中か否か？
+    Uint32 mTicksCount; // ゲーム時間
+    bool mIsRunning;    // 実行中か否か？
+    bool mIsLoopActors; // アクタのループ処理か？
 
     class Scene* mScene;     // 現在のシーン
     class Scene* mNextScene; // 遷移するシーン
