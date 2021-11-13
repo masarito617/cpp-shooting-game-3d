@@ -69,11 +69,14 @@ void Ship::LateUpdateActor(float deltaTime)
             GetGame()->GetRenderer()->GetCamera()->SetTargetActor(dummy);
             // プレイヤー破棄
             SetState(EDead);
-            // TODO 保持している角度を使ってQuaternionを計算する
             // 爆発エフェクトを生成
             auto* bomb = new Bomb(GetGame());
-            bomb->SetPosition(GetPosition());
-            bomb->SetRotation(GetRotation());
+            Vector3 position = GetPosition();
+            position -= 2.0f * GetForward();
+            bomb->SetPosition(position);
+            // 画面の方を向かせる
+            Vector3 rotation = Vector3(-15.0f, GetRotation().y + 180.0f, 0.0f);
+            bomb->SetRotation(rotation);
             break;
         }
     }
@@ -110,8 +113,6 @@ void Ship::ProcessInput(const uint8_t *state, float deltaTime)
             // 前方にミサイル生成
             auto* missile = new Missile(GetGame());
             missile->SetPosition(GetPosition() + 3.0f * GetForward());
-
-            // TODO GetRightで方向を決める
             // 縦方向の調整
             Vector3 rotation = GetRotation();
             if (state[SDL_SCANCODE_W])
