@@ -54,7 +54,7 @@ public:
     const Vector3& GetScale() const { return mScale; }
     void SetScale(const Vector3& scale) { mScale = scale; mRecalculateWorldTransform = true; }
     const Vector3& GetRotation() const { return mRotation; }
-    void SetRotation(const Vector3& rotation) { mRotation = rotation; mRecalculateWorldTransform = true; }
+    void SetRotation(const Vector3& rotation);
     const Matrix4& GetWorldTransform() const { return mWorldTransform; }
 
 };

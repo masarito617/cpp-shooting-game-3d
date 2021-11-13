@@ -123,16 +123,29 @@ Vector3 Actor::GetRight() const
     return Quaternion::RotateVec(Math::VEC3_UNIT_X, GetRotationQuaternion());
 }
 
+void Actor::SetRotation(const Vector3& rotation)
+{
+    mRotation = rotation;
+    // 0〜360の間に収める
+    mRotation.x = fmod(mRotation.x, 360.0f);
+    mRotation.y = fmod(mRotation.y, 360.0f);
+    mRotation.z = fmod(mRotation.z, 360.0f);
+    // -の場合は+360する
+    if (mRotation.x < 0.0f) mRotation.x += 360.0f;
+    if (mRotation.y < 0.0f) mRotation.y += 360.0f;
+    if (mRotation.z < 0.0f) mRotation.z += 360.0f;
+    mRecalculateWorldTransform = true;
+}
+
 const Quaternion Actor::GetRotationQuaternion() const
 {
     Quaternion q = Quaternion();
-    // rotate X
+    // rotate Y Y軸そのまま回転
+    q = Quaternion::Concatenate(q, Quaternion(Math::VEC3_UNIT_Y, Math::ToRadians(mRotation.y)));
+    // rotate X Y軸適用後に回転
     Vector3 right = Quaternion::RotateVec(Math::VEC3_UNIT_X, q);
     q = Quaternion::Concatenate(q, Quaternion(right, Math::ToRadians(mRotation.x)));
-    // rotate Y
-    Vector3 up = Quaternion::RotateVec(Math::VEC3_UNIT_Y, q);
-    q = Quaternion::Concatenate(q, Quaternion(up, Math::ToRadians(mRotation.y)));
-    // rotate Z
+    // rotate Z XY軸適用後に回転
     Vector3 forward = Quaternion::RotateVec(Math::VEC3_UNIT_Z, q);
     q = Quaternion::Concatenate(q, Quaternion(forward, Math::ToRadians(mRotation.z)));
     return q;
