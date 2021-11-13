@@ -33,51 +33,57 @@ void EnemyMarker::LateUpdateActor(float deltaTime)
     // ターゲットが設定されていない場合
     if (!mTarget) return;
 
-    // viewProjectionMatrixを首都九
+    // viewProjectionMatrixを取得
     Matrix4 viewProjection = GetGame()->GetRenderer()->GetProjectionMatrix() * GetGame()->GetRenderer()->GetViewMatrix();
     // エネミーのクリップ座標を求める
     Matrix4 enemyWorld = mTarget->GetWorldTransform();
-    Vector3 enemyPos = viewProjection * enemyWorld * Math::VEC3_UNIT;
+    Vector3 enemyViewPos = viewProjection * enemyWorld * Math::VEC3_UNIT;
     // プレイヤーのクリップ座標を求める
     auto* player = GetGame()->GetRenderer()->GetCamera()->GetTargetActor();
     Matrix4 playerWorld = player->GetWorldTransform();
-    Vector3 playerPos = viewProjection * playerWorld * Math::VEC3_UNIT;
+    Vector3 playerViewPos = viewProjection * playerWorld * Math::VEC3_UNIT;
 
     // 画面に映っていないエネミーのみマーカーを付ける
     SetScale(Math::VEC3_ZERO);
-    if (enemyPos.x < -1.0f || enemyPos.x > 1.0f)
+    if (enemyViewPos.x < -1.0f || enemyViewPos.x > 1.0f || enemyViewPos.z > 1.0f)
     {
         // 横に範囲がずれているエネミー
         // 見える範囲に調整
-        if (enemyPos.x < -1.0f) enemyPos.x = -0.95f;
-        if (enemyPos.x > 1.0f)  enemyPos.x =  0.95f;
+        if (enemyViewPos.x < -1.0f) enemyViewPos.x = -0.95f;
+        if (enemyViewPos.x > 1.0f)  enemyViewPos.x =  0.95f;
 
-        enemyPos.x *= GetGame()->ScreenWidth*0.5f;
-        enemyPos.y *= GetGame()->ScreenHeight*0.5f;
-        SetPosition(enemyPos);
-        // 向き調整
-        Vector3 distance = enemyPos - playerPos;
-        Vector3 rotation = GetRotation();
-        rotation.z = Math::ToDegrees(atan2(distance.y, distance.x)-Math::Pi/2.0f);
-        SetRotation(rotation);
-        // マーカーを表示
-        SetScale(Vector3(1.0f, 1.0f, 1.0f));
-    }
-    else if (enemyPos.z > 1.0f)
-    {
+        enemyViewPos.x *= GetGame()->ScreenWidth*0.5f;
+        enemyViewPos.y *= GetGame()->ScreenHeight*0.5f;
+
         // 後ろ側のエネミー
         // XY値を反転してZを0にする
-        enemyPos.x *= -GetGame()->ScreenWidth*0.5f;
-        enemyPos.y *= -GetGame()->ScreenHeight*0.5f;
-        enemyPos.z = 0.0f;
-        SetPosition(enemyPos);
+        if (enemyViewPos.z > 1.0f)
+        {
+            enemyViewPos.x *= -1.0f;
+            enemyViewPos.y *= -1.0f;
+            enemyViewPos.z = 0.0f;
+        }
+        SetPosition(enemyViewPos);
+
         // 向き調整
-        Vector3 distance = enemyPos - playerPos;
+        Vector3 distance = enemyViewPos - playerViewPos;
         Vector3 rotation = GetRotation();
-        rotation.z = Math::ToDegrees(atan2(distance.y, distance.x)-Math::Pi/2.0f);
+        rotation.z = Math::ToDegrees(atan2(distance.y, distance.x)-Math::Pi/2.0f); // atan2-90度
         SetRotation(rotation);
-        // マーカーを表示
-        SetScale(Vector3(1.0f, 1.0f, 1.0f));
+
+        // マーカー表示
+        // 距離によってサイズを変える
+        float markerScale = 0.0f;
+        float enemyDistance = mTarget->GetPosition().Length();
+        if (enemyDistance < 75.0f)
+        {
+            markerScale = 1.0f;
+        }
+        else if (enemyDistance < 150.0f)
+        {
+            markerScale = 2.0f - enemyDistance / 75.0f;
+        }
+        SetScale(Vector3(markerScale, markerScale, markerScale));
     }
 }
 
