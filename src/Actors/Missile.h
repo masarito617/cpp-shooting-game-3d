@@ -12,7 +12,7 @@ public:
 
 private:
     class BoxColliderComponent* mCollider;
-    float mSpeed = 30.0f;    // 速度
+    float mSpeed = 45.0f;    // 速度
     float mDistance = 50.0f; // 射程距離
 
 };
