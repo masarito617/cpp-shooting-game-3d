@@ -20,7 +20,7 @@ void BoxColliderComponent::OnUpdateWorldTransform()
     mWorldAABB.mMin = Vector3(mWorldAABB.mMin.x*scale.x, mWorldAABB.mMin.y*scale.y, mWorldAABB.mMin.z*scale.z);
     mWorldAABB.mMax = Vector3(mWorldAABB.mMax.x*scale.x, mWorldAABB.mMax.y*scale.y, mWorldAABB.mMax.z*scale.z);
     // rotation
-    mWorldAABB.Rotate(mActor->GetRotation());
+    mWorldAABB.Rotate(mActor->GetRotationQuaternion());
     // position
     mWorldAABB.mMin += mActor->GetPosition();
     mWorldAABB.mMax += mActor->GetPosition();

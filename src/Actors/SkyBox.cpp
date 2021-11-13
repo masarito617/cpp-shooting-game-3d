@@ -21,7 +21,9 @@ void SkyBox::UpdateActor(float deltaTime)
     Actor::UpdateActor(deltaTime);
 
     // 回転させる
-    SetRotationY(Math::ToRadians(mRotSpeed * deltaTime));
+    Vector3 rotation = GetRotation();
+    rotation.y += mRotSpeed * deltaTime;
+    SetRotation(rotation);
 }
 
 void SkyBox::ProcessInput(const uint8_t *state, float deltaTime)

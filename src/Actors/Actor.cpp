@@ -8,7 +8,7 @@ Actor::Actor(Game* game)
 :mState(EActive)
 ,mPosition(Math::VEC3_ZERO)
 ,mScale(Math::VEC3_UNIT)
-,mRotation(Quaternion())
+,mRotation(Math::VEC3_ZERO)
 ,mGame(game)
 ,mRecalculateWorldTransform(true)
 {
@@ -98,7 +98,7 @@ void Actor::CalculateWouldTransform()
         // を逆の順番で乗算する。
         mRecalculateWorldTransform = false;
         mWorldTransform = Matrix4::CreateTranslation(mPosition.x, mPosition.y, mPosition.z);
-        mWorldTransform *= Matrix4::CreateQuaternion(mRotation);
+        mWorldTransform *= Matrix4::CreateQuaternion(GetRotationQuaternion());
         mWorldTransform *= Matrix4::CreateScale(mScale.x, mScale.y, mScale.z);
 
         // Componentのワールド座標を更新
@@ -113,31 +113,27 @@ void Actor::CalculateWouldTransform()
 Vector3 Actor::GetForward() const
 {
     // Z方向の単位ベクトルとクォータニオンから計算
-    return Quaternion::RotateVec(Math::VEC3_UNIT_Z, mRotation);
+    return Quaternion::RotateVec(Math::VEC3_UNIT_Z, GetRotationQuaternion());
 }
 
+// 右方ベクトルを取得する
 Vector3 Actor::GetRight() const
 {
     // X方向の単位ベクトルとクォータニオンから計算
-    return Quaternion::RotateVec(Math::VEC3_UNIT_X, mRotation);
+    return Quaternion::RotateVec(Math::VEC3_UNIT_X, GetRotationQuaternion());
 }
 
-// クォータニオンを加えて回転させる
-void Actor::SetRotationX(float radian)
+const Quaternion Actor::GetRotationQuaternion() const
 {
-    Quaternion q(Math::VEC3_UNIT_X, radian);
-    mRotation = Quaternion::Concatenate(mRotation, q);
-    mRecalculateWorldTransform = true;
-}
-void Actor::SetRotationY(float radian)
-{
-    Quaternion q(Math::VEC3_UNIT_Y, radian);
-    mRotation = Quaternion::Concatenate(mRotation, q);
-    mRecalculateWorldTransform = true;
-}
-void Actor::SetRotationZ(float radian)
-{
-    Quaternion q(Math::VEC3_UNIT_Z, radian);
-    mRotation = Quaternion::Concatenate(mRotation, q);
-    mRecalculateWorldTransform = true;
+    Quaternion q = Quaternion();
+    // rotate X
+    Vector3 right = Quaternion::RotateVec(Math::VEC3_UNIT_X, q);
+    q = Quaternion::Concatenate(q, Quaternion(right, Math::ToRadians(mRotation.x)));
+    // rotate Y
+    Vector3 up = Quaternion::RotateVec(Math::VEC3_UNIT_Y, q);
+    q = Quaternion::Concatenate(q, Quaternion(up, Math::ToRadians(mRotation.y)));
+    // rotate Z
+    Vector3 forward = Quaternion::RotateVec(Math::VEC3_UNIT_Z, q);
+    q = Quaternion::Concatenate(q, Quaternion(forward, Math::ToRadians(mRotation.z)));
+    return q;
 }

@@ -33,16 +33,11 @@ void Ship::UpdateActor(float deltaTime)
         // 船の傾きを調整
         // 同時押しされた場合も考慮
         float rot = 0.0f;
-        if (isChangeRotLeft)
-        {
-            rot += mIsRotLeft ? mRotTilt : -mRotTilt;
-        }
-        if (isChangeRotRight)
-        {
-            rot += mIsRotRight ? -mRotTilt : mRotTilt;
-        }
-        Quaternion q = Quaternion(GetForward(), Math::ToRadians(rot));
-        SetRotation(Quaternion::Concatenate(GetRotation(), q));
+        if (mIsRotLeft)  rot += mRotTilt;
+        if (mIsRotRight) rot += -mRotTilt;
+        Vector3 rotation = GetRotation();
+        rotation.z = rot;
+        SetRotation(rotation);
     }
     // 回転中フラグを保持
     mIsRotLeftBefore = mIsRotLeft;
@@ -93,12 +88,16 @@ void Ship::ProcessInput(const uint8_t *state, float deltaTime)
     mIsRotRight = false;
     if (state[SDL_SCANCODE_A])
     {
-        SetRotationY(Math::ToRadians(-mRotSpeed * deltaTime));
+        Vector3 rotation = GetRotation();
+        rotation.y += -mRotSpeed * deltaTime;
+        SetRotation(rotation);
         mIsRotLeft = true;
     }
     if (state[SDL_SCANCODE_D])
     {
-        SetRotationY(Math::ToRadians(mRotSpeed * deltaTime));
+        Vector3 rotation = GetRotation();
+        rotation.y += mRotSpeed * deltaTime;
+        SetRotation(rotation);
         mIsRotRight = true;
     }
     // ミサイル発射
@@ -112,19 +111,18 @@ void Ship::ProcessInput(const uint8_t *state, float deltaTime)
             auto* missile = new Missile(GetGame());
             missile->SetPosition(GetPosition() + 3.0f * GetForward());
 
+            // TODO GetRightで方向を決める
             // 縦方向の調整
-            Quaternion rot = GetRotation();
+            Vector3 rotation = GetRotation();
             if (state[SDL_SCANCODE_W])
             {
-                Quaternion q = Quaternion(GetRight(), Math::ToRadians(-mShotRotVertical));
-                rot = Quaternion::Concatenate(rot, q);
+                rotation.x = -mShotRotVertical;
             }
             if (state[SDL_SCANCODE_S])
             {
-                Quaternion q = Quaternion(GetRight(), Math::ToRadians(mShotRotVertical));
-                rot = Quaternion::Concatenate(rot, q);
+                rotation.x = mShotRotVertical;
             }
-            missile->SetRotation(rot);
+            missile->SetRotation(rotation);
         }
     }
 }

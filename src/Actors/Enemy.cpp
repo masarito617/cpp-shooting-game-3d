@@ -69,7 +69,9 @@ void Enemy::UpdateActor(float deltaTime)
     {
         mSpeed = 0.0f;
         // 喜びの舞い
-        SetRotationY(mHappyRotSpeed);
+        Vector3 rotation = GetRotation();
+        rotation.y += mHappyRotSpeed * deltaTime;
+        SetRotation(rotation);
     }
 }
 
@@ -92,5 +94,7 @@ void Enemy::SetInitPositionByDegree(float degree)
     mInitPosition = new Vector3(pos.x, pos.y, pos.z);
     // 中央を向かせる(270-θ)
     float radian = atan2(pos.z, pos.x);
-    SetRotationY(1.5f*Math::Pi - radian);
+    Vector3 rotation = GetRotation();
+    rotation.y += Math::ToDegrees(1.5f*Math::Pi - radian);
+    SetRotation(rotation);
 }

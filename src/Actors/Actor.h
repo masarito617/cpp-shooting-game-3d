@@ -30,15 +30,13 @@ public:
     Vector3 GetForward() const; // 前方ベクトルの取得
     Vector3 GetRight() const;   // 右方ベクトルの取得
 
-    void SetRotationX(float radian); // X軸の回転処理
-    void SetRotationY(float radian); // Y軸の回転処理
-    void SetRotationZ(float radian); // Z軸の回転処理
+    const Quaternion GetRotationQuaternion() const; // クォータニオン取得
 
 private:
     State mState;         // 状態
     Vector3 mPosition;    // 位置
     Vector3 mScale;       // 大きさ
-    Quaternion mRotation; // 回転
+    Vector3 mRotation;    // 回転
     Matrix4 mWorldTransform;         // ワールド変換座標
     bool mRecalculateWorldTransform; // 再計算フラグ
 
@@ -55,8 +53,8 @@ public:
     void SetPosition(const Vector3& pos) { mPosition = pos; mRecalculateWorldTransform = true; }
     const Vector3& GetScale() const { return mScale; }
     void SetScale(const Vector3& scale) { mScale = scale; mRecalculateWorldTransform = true; }
-    const Quaternion& GetRotation() const { return mRotation; }
-    void SetRotation(const Quaternion& rotation) { mRotation = rotation; mRecalculateWorldTransform = true; }
+    const Vector3& GetRotation() const { return mRotation; }
+    void SetRotation(const Vector3& rotation) { mRotation = rotation; mRecalculateWorldTransform = true; }
     const Matrix4& GetWorldTransform() const { return mWorldTransform; }
 
 };

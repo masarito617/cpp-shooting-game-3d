@@ -27,7 +27,7 @@ private:
     float mTimeCount;       // 経過時間
     float mWaitTime;        // 待機時間
 
-    float mHappyRotSpeed = 3.5f;    // 喜びの舞
+    float mHappyRotSpeed = 1200.0f; // 喜びの舞
     float mAppearDistance = 120.0f; // 出現時の距離(100あたりから見えるようになる)
 
     class EnemyMarker* mMarker; // マーカー
