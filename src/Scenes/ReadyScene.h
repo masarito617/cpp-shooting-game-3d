@@ -12,5 +12,7 @@ public:
 
 private:
     class Actor* mStartMsg;
+    class Actor* mMenuMsg;
+    class Actor* mTitleMsg;
 
 };

@@ -9,6 +9,8 @@
 ReadyScene::ReadyScene(class Game *game)
 :Scene(game)
 ,mStartMsg(nullptr)
+,mMenuMsg(nullptr)
+,mTitleMsg(nullptr)
 {}
 
 ReadyScene::~ReadyScene()
@@ -25,6 +27,11 @@ void ReadyScene::Start()
     ship->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
     // カメラターゲットに設定
     mGame->GetRenderer()->GetCamera()->SetTargetActor(ship);
+    // タイトルメッセージを表示
+    mTitleMsg = new Actor(mGame);
+    mTitleMsg->SetPosition(Vector3(-220.0f, 200.0f, 0.0f));
+    auto* titleMsgSprite = new SpriteComponent(mTitleMsg, 200);
+    titleMsgSprite->SetTexture(mGame->GetRenderer()->GetTexture(mGame->GetAssetsPath() + "msg_title.png"));
     // 登場アニメーション開始
     mGame->GetRenderer()->GetCamera()->AnimStart();
 }
@@ -36,11 +43,18 @@ void ReadyScene::Update(float deltaTime)
     // アニメーションが終わった場合
     if (!mStartMsg && mGame->GetRenderer()->GetCamera()->GetIsAnimFinish())
     {
+        // タイトルメッセージを破棄
+        mTitleMsg->SetState(Actor::EDead);
         // 開始メッセージを表示
         mStartMsg = new Actor(mGame);
         mStartMsg->SetPosition(Math::VEC3_ZERO);
         auto* startMsgSprite = new SpriteComponent(mStartMsg, 200);
         startMsgSprite->SetTexture(mGame->GetRenderer()->GetTexture(mGame->GetAssetsPath() + "msg_start.png"));
+        // 操作説明を表示
+        mMenuMsg = new Actor(mGame);
+        mMenuMsg->SetPosition(Vector3(0.0f, 210.0f, 0.0f));
+        auto* menuMsgSprite = new SpriteComponent(mMenuMsg, 200);
+        menuMsgSprite->SetTexture(mGame->GetRenderer()->GetTexture(mGame->GetAssetsPath() + "msg_menu.png"));
     }
 }
 
@@ -56,6 +70,7 @@ void ReadyScene::ProcessInput(const Uint8 *state, float deltaTime)
     {
         mGame->SetNextScene(new GameScene(mGame));
         mStartMsg->SetState(Actor::EDead);
+        mMenuMsg->SetState(Actor::EDead);
     }
 }
 
