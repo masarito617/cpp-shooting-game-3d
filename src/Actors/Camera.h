@@ -19,12 +19,13 @@ private:
     const float mOffsetPosUp = 8.5f;
     const float mOffsetLookForward = 10.0f;
 
-    float mDeltaAnimTime = 0.0f;
-    const float mAnimTime = 3.0f;
-    const float mAnimOffsetInitDistance = 10.0f;
-    const float mAnimOffsetLookForward = 3.0f;
-    const Vector3 mAnimLookVec = Vector3(-1.0f, -1.0f, 1.0f);
-    bool mIsAnimFinish =false;
+    // 登場アニメーション関連
+    float mTotalAnimTime = 0.0f;  // アニメーション合計時間
+    const float mAnimTime = 3.0f; // アニメーション時間
+    const float mAnimOffsetInitDistance = 10.0f; // 初期状態の距離
+    const float mAnimOffsetLookForward = 3.0f;   // 注視点オフセット
+    const Vector3 mAnimLookVec = Vector3(-1.0f, -1.0f, 1.0f); // 移動方向
+    bool mIsAnimFinish =false; // 完了したかどうか？
 
 public:
     void SetTargetActor(Actor* actor) { mTargetActor = actor; }

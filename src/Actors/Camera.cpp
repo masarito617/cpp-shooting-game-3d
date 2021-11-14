@@ -32,8 +32,8 @@ void Camera::UpdateActor(float deltaTime)
             target = mTargetActor->GetPosition();
             target += mAnimOffsetLookForward * mTargetActor->GetForward();
             // アニメーション時間更新
-            mDeltaAnimTime += deltaTime;
-            if (mDeltaAnimTime >= mAnimTime)
+            mTotalAnimTime += deltaTime;
+            if (mTotalAnimTime >= mAnimTime)
             {
                 mIsAnimFinish = true;
             }
@@ -63,7 +63,7 @@ void Camera::ProcessInput(const uint8_t *state, float deltaTime)
 void Camera::AnimStart()
 {
     // アニメーションフラグ初期化
-    mDeltaAnimTime = 0.0f;
+    mTotalAnimTime = 0.0f;
     mIsAnimFinish = false;
     // アニメーション初期位置に設定
     SetPosition(mAnimOffsetInitDistance * mAnimLookVec);
