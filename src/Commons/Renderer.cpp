@@ -88,7 +88,7 @@ bool Renderer::LoadData()
 
     // ライティングパラメータ設定
     mAmbientLight = Vector3(0.35f, 0.35f, 0.35f);
-    mDirLightDirection = Vector3(0.3f, 0.3f, 0.8f);
+    mDirLightDirection = Vector3(0.5f, -0.35f, 0.35f);
     mDirLightDiffuseColor = Vector3(0.8f, 0.9f, 1.0f);
     mDirLightSpecColor = Vector3(0.8f, 0.8f, 0.8f);
 
