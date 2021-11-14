@@ -62,5 +62,6 @@ public:
     const Vector3& GetDirLightDirection() const { return mDirLightDirection; }
     const Vector3& GetDirLightDiffuseColor() const { return mDirLightDiffuseColor; }
     const Vector3& GetDirLightSpecColor() const { return mDirLightSpecColor; }
+    void SetDirLightDirection(class Vector3 vec) { mDirLightDirection = vec; }
 
 };

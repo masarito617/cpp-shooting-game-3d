@@ -32,6 +32,8 @@ void ReadyScene::Start()
     mTitleMsg->SetPosition(Vector3(-220.0f, 200.0f, 0.0f));
     auto* titleMsgSprite = new SpriteComponent(mTitleMsg, 200);
     titleMsgSprite->SetTexture(mGame->GetRenderer()->GetTexture(mGame->GetAssetsPath() + "msg_title.png"));
+    // 見えやすいようにライティング調整
+    mGame->GetRenderer()->SetDirLightDirection(Vector3(0.3f, 0.3f, 0.5f));
     // 登場アニメーション開始
     mGame->GetRenderer()->GetCamera()->AnimStart();
 }
@@ -55,6 +57,8 @@ void ReadyScene::Update(float deltaTime)
         mMenuMsg->SetPosition(Vector3(0.0f, 210.0f, 0.0f));
         auto* menuMsgSprite = new SpriteComponent(mMenuMsg, 200);
         menuMsgSprite->SetTexture(mGame->GetRenderer()->GetTexture(mGame->GetAssetsPath() + "msg_menu.png"));
+        // ライティング元に戻す
+        mGame->GetRenderer()->SetDirLightDirection(Vector3(0.5f, -0.35f, 0.35f));
     }
 }
 
