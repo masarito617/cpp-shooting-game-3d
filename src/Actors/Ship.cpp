@@ -28,6 +28,15 @@ void Ship::UpdateActor(float deltaTime)
 {
     Actor::UpdateActor(deltaTime);
 
+    // GameScene以外は向き固定
+    if (GetGame()->GetScene()->GetSceneName() != "GAME")
+    {
+        Vector3 rotation = GetRotation();
+        rotation.z = 0.0f;
+        SetRotation(rotation);
+        return;
+    }
+
     // 回転が変わった場合
     bool isChangeRotLeft  = mIsRotLeft  != mIsRotLeftBefore;
     bool isChangeRotRight = mIsRotRight != mIsRotRightBefore;
