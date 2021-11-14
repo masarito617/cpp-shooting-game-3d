@@ -48,9 +48,9 @@ bool Game::LoadData()
 
     // 背景の作成
     auto* bgBack = new SkyBox(this, "bg_back.fbx", 5.0f);
-    bgBack->SetScale(Vector3(0.75f, 0.75f, 0.75f));
+    bgBack->SetScale(Vector3(1.2f, 1.2f, 1.2f));
     auto* bgFront = new SkyBox(this, "bg_front.fbx", 7.0f);
-    bgFront->SetScale(Vector3(0.5f, 0.5f, 0.5f));
+    bgFront->SetScale(Vector3(0.75f, 0.75f, 0.75f));
 
     return true;
 }
