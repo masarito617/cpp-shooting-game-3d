@@ -14,7 +14,7 @@ void Scene::Start()
 void Scene::Update(float deltaTime)
 {}
 
-void Scene::ProcessInput(const Uint8 *state)
+void Scene::ProcessInput(const Uint8 *state, float deltaTime)
 {}
 
 std::string const Scene::GetSceneName()

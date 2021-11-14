@@ -40,10 +40,12 @@ private:
     Uint32 mTicksCount; // ゲーム時間
     bool mIsRunning;    // 実行中か否か？
     bool mIsLoopActors; // アクタのループ処理か？
+    bool mIsGameClear;  // ゲームクリアしたか？
 
     class Scene* mScene;     // 現在のシーン
     class Scene* mNextScene; // 遷移するシーン
 
+    class Ship* mShip; // 宇宙船(プレイヤー)
     std::vector<class Enemy*> mEnemies; // エネミー群
     
     // Mac + CLion環境での相対パス
@@ -64,5 +66,9 @@ public:
     std::string GetShaderPath() const { return ShaderPath; }
     class Renderer* GetRenderer() const { return mRenderer; }
     std::vector<class Enemy*> GetEnemies() { return mEnemies; }
+    void SetShip(class Ship* ship) { mShip = ship; }
+    Ship* GetShip() const { return mShip; }
+    void SetGameClear(const bool isClear) { mIsGameClear = isClear; }
+    bool GetGameClear() const { return mIsGameClear; }
 
 };

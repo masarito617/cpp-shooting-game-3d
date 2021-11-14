@@ -11,6 +11,7 @@ Game::Game()
 :mTicksCount(0)
 ,mIsRunning(true)
 ,mIsLoopActors(false)
+,mIsGameClear(false)
 {
 }
 
@@ -160,6 +161,9 @@ void Game::ProcessInput(float deltaTime)
     {
         actor->ProcessInput(state, deltaTime);
     }
+
+    // 各シーンの入力イベント
+    mScene->ProcessInput(state, deltaTime);
 }
 
 // ゲームループ 出力処理

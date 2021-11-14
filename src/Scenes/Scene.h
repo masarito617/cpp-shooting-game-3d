@@ -10,7 +10,7 @@ public:
     virtual ~Scene();
     virtual void Start();
     virtual void Update(float deltaTime);
-    virtual void ProcessInput(const Uint8* state);
+    virtual void ProcessInput(const Uint8* state, float deltaTime);
     virtual std::string const GetSceneName();
 
 protected:

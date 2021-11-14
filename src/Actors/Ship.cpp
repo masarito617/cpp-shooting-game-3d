@@ -7,6 +7,7 @@
 #include "../Commons/Mesh.h"
 #include "../Components/BoxColliderComponent.h"
 #include "../Components/MeshComponent.h"
+#include "../Scenes/EndScene.h"
 
 Ship::Ship(class Game *game)
 : Actor(game)
@@ -18,6 +19,9 @@ Ship::Ship(class Game *game)
     meshComp->SetShader(shader);
     mCollider = new BoxColliderComponent(this);
     mCollider->SetObjectAABB(mesh->GetBox());
+
+    // gameクラスに保持
+    game->SetShip(this);
 }
 
 void Ship::UpdateActor(float deltaTime)
@@ -29,7 +33,6 @@ void Ship::UpdateActor(float deltaTime)
     bool isChangeRotRight = mIsRotRight != mIsRotRightBefore;
     if (isChangeRotLeft || isChangeRotRight)
     {
-        // TODO 船の角度を保持する
         // 船の傾きを調整
         // 同時押しされた場合も考慮
         float rot = 0.0f;
@@ -77,6 +80,8 @@ void Ship::LateUpdateActor(float deltaTime)
             // 画面の方を向かせる
             Vector3 rotation = Vector3(-15.0f, GetRotation().y + 180.0f, 0.0f);
             bomb->SetRotation(rotation);
+            // ゲーム終了
+            GetGame()->SetNextScene(new EndScene(GetGame()));
             break;
         }
     }
@@ -85,6 +90,9 @@ void Ship::LateUpdateActor(float deltaTime)
 void Ship::ProcessInput(const uint8_t *state, float deltaTime)
 {
     Actor::ProcessInput(state, deltaTime);
+
+    // GameScene以外は操作不能にする
+    if (GetGame()->GetScene()->GetSceneName() != "GAME") return;
 
     // 押下キー方向に回転する
     mIsRotLeft = false;

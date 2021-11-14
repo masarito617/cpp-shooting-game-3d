@@ -33,18 +33,22 @@ void EnemyMarker::LateUpdateActor(float deltaTime)
     // ターゲットが設定されていない場合
     if (!mTarget) return;
 
-    // viewProjectionMatrixを取得
+    // 一旦非表示
+    SetScale(Math::VEC3_ZERO);
+
+    // viewProjectionMatrix取得
     Matrix4 viewProjection = GetGame()->GetRenderer()->GetProjectionMatrix() * GetGame()->GetRenderer()->GetViewMatrix();
     // エネミーのクリップ座標を求める
     Matrix4 enemyWorld = mTarget->GetWorldTransform();
     Vector3 enemyViewPos = viewProjection * enemyWorld * Math::VEC3_UNIT;
-    // プレイヤーのクリップ座標を求める
+    // プレイヤー取得
     auto* player = GetGame()->GetRenderer()->GetCamera()->GetTargetActor();
+    if (!player) return;
+    // プレイヤーのクリップ座標を求める
     Matrix4 playerWorld = player->GetWorldTransform();
     Vector3 playerViewPos = viewProjection * playerWorld * Math::VEC3_UNIT;
 
     // 画面に映っていないエネミーのみマーカーを付ける
-    SetScale(Math::VEC3_ZERO);
     if (enemyViewPos.x < -1.0f || enemyViewPos.x > 1.0f || enemyViewPos.z > 1.0f)
     {
         // 横に範囲がずれているエネミー

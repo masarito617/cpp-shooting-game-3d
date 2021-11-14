@@ -1,16 +1,16 @@
 #pragma once
 #include "Scene.h"
 
-class ReadyScene : public Scene {
+class EndScene : public Scene {
 public:
-    ReadyScene(class Game* game);
-    ~ReadyScene();
+    EndScene(class Game* game);
+    ~EndScene();
     void Start() override;
     void Update(float deltaTime) override;
     void ProcessInput(const Uint8* state, float deltaTime) override;
     std::string const GetSceneName() override;
 
 private:
-    class Actor* mStartMsg;
+    class Actor* mEndMsg;
 
 };

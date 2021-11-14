@@ -19,6 +19,6 @@ private:
 
 public:
     void SetTargetActor(Actor* actor) { mTargetActor = actor; }
-    const class Actor* GetTargetActor() const { return mTargetActor; }
+    class Actor* GetTargetActor() const { return mTargetActor; }
 
 };
