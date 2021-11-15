@@ -8,9 +8,8 @@
 
 Enemy::Enemy(class Game *game)
 : Actor(game)
-, mMoveType(STRAIGHT)
 , mSpeed(5.0f)
-, mShakeWidth(5.0f)
+, mShakeWidth(Math::VEC2_ZERO)
 , mTimeCount(0.0f)
 , mWaitTime(0.0f)
 , mMarker(nullptr)
@@ -47,32 +46,29 @@ void Enemy::UpdateActor(float deltaTime)
     mTimeCount += deltaTime;
     if (mTimeCount < mWaitTime) return;
 
-    // 位置の更新
+    // プレイヤー位置(0, 0)まで来た場合
     Vector3 pos = GetPosition();
-    switch (mMoveType)
+    if (fabs(pos.x) <= 1.0f && fabs(pos.y) <= 1.0f && fabs(pos.z) <= 1.0f)
     {
-        case STRAIGHT:
-            pos += mSpeed * deltaTime * GetForward();
-            break;
-        case SHAKE:
-            pos.y = mInitPosition->y + (sinf(mTimeCount / 0.2f) * mShakeWidth);
-            pos += mSpeed * deltaTime * GetForward();
-            break;
-        default:
-            break;
-    }
-    SetPosition(pos);
-
-    // プレイヤーに近づいたら移動を止める
-    if ((fabs(pos.x - 0.0f) <= 1.0f)
-        && fabs(pos.z - 0.0f) <= 1.0f)
-    {
-        mSpeed = 0.0f;
         // 喜びの舞い
         Vector3 rotation = GetRotation();
         rotation.y += mHappyRotSpeed * deltaTime;
         SetRotation(rotation);
+        return;
     }
+
+    // 真ん中に来るまで進む
+    if (mTotalMove < mAppearDistance - 0.0f) {
+        mTotalMove += (mSpeed * deltaTime * GetForward()).Length();
+    }
+
+    // 幅が設定されている場合は揺らす
+    Vector3 rightOffset = Math::VEC3_ZERO + cosf(mTimeCount / 0.2f) * mShakeWidth.x * GetRight(); // 横揺れ
+    Vector3 upOffset    = Vector3(0.0f, cosf(mTimeCount / 0.2f) * mShakeWidth.y, 0.0f); // 縦揺れ
+
+    // 位置更新
+    Vector3 newPos = mInitPosition + (mTotalMove * GetForward() + rightOffset + upOffset);
+    SetPosition(newPos);
 }
 
 void Enemy::ProcessInput(const uint8_t *state, float deltaTime)
@@ -91,7 +87,7 @@ void Enemy::SetInitPositionByDegree(float degree)
     pos = Quaternion::RotateVec(pos, q);
     Actor::SetPosition(pos);
     // 初期位置を保持する
-    mInitPosition = new Vector3(pos.x, pos.y, pos.z);
+    mInitPosition = Vector3(pos.x, pos.y, pos.z);
     // 中央を向かせる(270-θ)
     float radian = atan2(pos.z, pos.x);
     Vector3 rotation = GetRotation();

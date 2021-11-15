@@ -15,16 +15,26 @@ void GameScene::Start()
     Scene::Start();
 
     // エネミー生成
-    for (int i = 0; i < 12; i++)
+    float tmpDegree = 0.0f;
+    for (int i = 0; i < 15; i++)
     {
         auto* enemy = new Enemy(mGame);
-        enemy->SetInitPositionByDegree(30.0f*i);
-        enemy->SetSpeed(35.0f);
-        enemy->SetWaitTime(i);
+        // 前回の出現位置+-60度
+        tmpDegree += Math::GetRand(-60.0f, 60.0f);
+        enemy->SetInitPositionByDegree(tmpDegree);
+        // 速度徐々に速く
+        enemy->SetSpeed(Math::GetRand(25.0f, 45.0f) * (1.0f + i*0.02f));
+        // 大きさ
+        enemy->SetScale(Math::GetRand(1.0f, 3.0f) * Math::VEC3_UNIT);
+        // 揺れ幅 基本は横のみ
+        enemy->SetShakeWidth(Vector2(Math::GetRand(-7.0f, 7.0f), 0.0f));
+        // 数匹ごとに縦揺れも追加
         if (i%3 == 2)
         {
-            enemy->SetMoveType(Enemy::SHAKE);
+            enemy->SetShakeWidth(Vector2(Math::GetRand(-10.0f, 10.0f), Math::GetRand(-8.5f, 8.5f)));
         }
+        // 3匹ずつ出現させる
+        enemy->SetWaitTime(i / 3 * Math::GetRand(5.0f, 7.0f));
     }
 }
 

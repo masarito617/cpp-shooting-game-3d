@@ -12,7 +12,7 @@ public:
 
 private:
     class BoxColliderComponent* mCollider;
-    float mRotSpeed = 45.0f; // 回転速度
+    float mRotSpeed = 55.0f; // 回転速度
     float mRotTilt = 30.0f;  // 回転中の船の傾き
 
     // 回転中かどうかの判定で使用
