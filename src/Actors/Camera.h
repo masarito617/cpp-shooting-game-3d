@@ -24,7 +24,7 @@ private:
     const float mAnimTime = 3.5f; // アニメーション時間
     const float mAnimOffsetInitDistance = 10.0f; // 初期状態の距離
     const float mAnimOffsetLookForward = 4.5f;   // 注視点オフセット
-    const Vector3 mAnimLookVec = Vector3(-1.0f, -1.0f, 1.0f); // 移動方向
+    const Vector3 mAnimLookVec = Vector3(-0.8f, -1.2f, 0.85f); // 移動方向
     bool mIsAnimFinish =false; // 完了したかどうか？
 
 public:
