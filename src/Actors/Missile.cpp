@@ -48,6 +48,7 @@ void Missile::LateUpdateActor(float deltaTime)
             auto* bomb = new Bomb(GetGame());
             bomb->SetPosition(enemy->GetPosition());
             bomb->SetRotation(enemy->GetRotation());
+            bomb->SetMaxScale(enemy->GetScale().x * 2.0f);
             break;
         }
     }

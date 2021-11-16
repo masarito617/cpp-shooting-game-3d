@@ -22,12 +22,12 @@ void Bomb::UpdateActor(float deltaTime)
     Actor::UpdateActor(deltaTime);
 
     // 徐々に大きくする
-    float changeScale = mTimeCount / DisplayTime * 5.0f;
-    if (changeScale > MaxScale) changeScale = MaxScale;
+    float changeScale = mTimeCount / mDisplayTime * 10.0f;
+    if (changeScale > mMaxScale) changeScale = mMaxScale;
     SetScale(Vector3(changeScale, changeScale, 1.0f));
     // 表示時間を過ぎたら破棄
     mTimeCount += deltaTime;
-    if (mTimeCount >= DisplayTime)
+    if (mTimeCount >= mDisplayTime)
     {
         SetState(EDead);
     }

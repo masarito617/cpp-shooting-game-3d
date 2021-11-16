@@ -34,7 +34,7 @@ void GameScene::Start()
             enemy->SetShakeWidth(Vector2(Math::GetRand(-10.0f, 10.0f), Math::GetRand(-8.5f, 8.5f)));
         }
         // 3匹ずつ出現させる
-        enemy->SetWaitTime(i / 3 * Math::GetRand(5.0f, 7.0f));
+        enemy->SetWaitTime(i / 3 * Math::GetRand(4.0f, 5.5f));
     }
 }
 
