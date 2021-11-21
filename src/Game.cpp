@@ -16,8 +16,14 @@ Game::Game()
 }
 
 // ゲーム初期化
-bool Game::Initialize()
+bool Game::Initialize(char* argv[])
 {
+    // 実行ファイル用：絶対パスの設定
+//    std::string modulePath = argv[0];
+//    AbsolutePath = modulePath.substr(0, modulePath.find_last_of("\\/"));
+//    AssetsPath = AbsolutePath + AssetsPath;
+//    ShaderPath = AbsolutePath + ShaderPath;
+
     // レンダラー初期化
     mRenderer = new Renderer(this);
     if (!mRenderer->Initialize())

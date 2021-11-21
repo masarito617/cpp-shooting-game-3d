@@ -1,6 +1,6 @@
 
-＊EXEファイル実行にはSDL2、SDL_image、fbxsdk、glewのdllファイルが必要です。
-公式サイトからSDL2、SDL_imageをダウンロード後、下記ファイルを格納して実行してください。
+＊EXEファイル実行には別途SDL2、SDL_image、fbxsdk、glewのdllファイルが必要です。
+公式サイトから各ライブラリをダウンロード後、下記ファイルを格納して実行してください。
 ・SDL2.dll
 ・SDL2_image.dll
 ・zlib1.dll

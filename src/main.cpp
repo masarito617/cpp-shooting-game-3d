@@ -5,7 +5,7 @@
 int main(int argc, char* argv[]) {
     // 初期化->ループ->終了
     Game game;
-    bool success = game.Initialize();
+    bool success = game.Initialize(argv);
     if (success)
     {
         game.RunLoop();

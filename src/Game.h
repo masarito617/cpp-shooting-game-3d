@@ -11,7 +11,7 @@ class Game
 {
 public:
     Game();
-    bool Initialize(); // ゲーム初期化
+    bool Initialize(char* argv[]); // ゲーム初期化
     bool LoadData();   // データロード処理
     void RunLoop();    // ゲームループ処理
     void Shutdown();   // シャットダウン処理
@@ -47,6 +47,9 @@ private:
 
     class Ship* mShip; // 宇宙船(プレイヤー)
     std::vector<class Enemy*> mEnemies; // エネミー群
+
+    // 絶対パス(argv引数から設定)
+    std::string AbsolutePath;
     
     // Mac + CLion環境での相対パス
     const std::string AssetsPath = "../Assets/";      // Assetsパス
@@ -70,5 +73,7 @@ public:
     Ship* GetShip() const { return mShip; }
     void SetGameClear(const bool isClear) { mIsGameClear = isClear; }
     bool GetGameClear() const { return mIsGameClear; }
+
+    std::string GetAbsolutePath() const { return AbsolutePath; }
 
 };
