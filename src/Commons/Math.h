@@ -205,7 +205,6 @@ public:
     // クォータニオンでベクトルを回転させる
     static Vector3 RotateVec(const Vector3& v, const Quaternion& q)
     {
-        // TODO なぜこの式になるのか？行列での回転ではだめ？
         // vec = 2.0*qv・(qv・v + qw*v）
         Vector3 qv(q.x, q.y, q.z);
         Vector3 retVec = v;
