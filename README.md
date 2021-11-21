@@ -1,5 +1,8 @@
 # 3DShootingGame
-SDL＊GLEW環境で製作した3Dシューティングゲーム
+SDL＊GLEW環境で製作した3Dシューティングゲーム<br>
+![3dshoot_sample01](https://user-images.githubusercontent.com/77447256/142758014-c4de12ef-b7f9-4f6d-b30b-8fb5ce218451.png)
+<br>
+![3dshoot_sample02](https://user-images.githubusercontent.com/77447256/142758030-4d7371b7-a745-4825-80d2-d049e1c7a88b.png)
 <br>
 ※Buildフォルダに格納してあるEXEファイル、UNIX実行ファイルを実行して遊べますが、
 <br>
